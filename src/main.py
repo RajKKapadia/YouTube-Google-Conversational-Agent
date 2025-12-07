@@ -4,7 +4,7 @@ from pydantic import BaseModel
 from src.utils import get_weather, verify_token
 from src import logging
 
-app = FastAPI(title="Wanerby Geocoding API", version="0.1.0")
+app = FastAPI(title="Weather APIs for the Google Conversational Agents.", version="0.1.0")
 
 
 logger = logging.getLogger(__name__)
@@ -20,16 +20,8 @@ async def handle_post_weather(
 ):
     try:
         return await get_weather(city=playbook_request.city)
-        # return {
-        #     "city": f"{playbook_request.city}",
-        #     "temperature": "25 degree",
-        #     "feels_like": "Good",
-        #     "humidity": "No humidity",
-        #     "pressure": "No pressure",
-        #     "clouds": "No clouds, clear sky",
-        # }
     except Exception as e:
-        logger.info("Error at handle_post_high_priority_sos:")
+        logger.info("Error at handle_post_weather:")
         logger.error(e)
         return {
             "status": "FAILURE",
